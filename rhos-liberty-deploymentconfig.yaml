@@ -1,0 +1,95 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: '2019-06-20T15:59:04Z'
+  generation: 2
+  labels:
+    app: liberty
+  name: liberty
+  namespace: websphere-liberty
+  resourceVersion: '281954'
+  selfLink: >-
+    /apis/apps.openshift.io/v1/namespaces/websphere-liberty/deploymentconfigs/liberty
+  uid: 53cbeaee-9374-11e9-bfb6-92111c15adfc
+spec:
+  replicas: 1
+  selector:
+    app: liberty
+    deploymentconfig: liberty
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        app: liberty
+        deploymentconfig: liberty
+    spec:
+      containers:
+        - image: >-
+            websphere-liberty@sha256:5ecfa98335b1c7ae91ef43e44222301d2e6714c380d5ba3c56fd8226802e6d33
+          imagePullPolicy: Always
+          name: liberty
+          ports:
+            - containerPort: 9080
+              protocol: TCP
+            - containerPort: 9443
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - liberty
+        from:
+          kind: ImageStreamTag
+          name: 'liberty:latest'
+          namespace: websphere-liberty
+        lastTriggeredImage: >-
+          websphere-liberty@sha256:5ecfa98335b1c7ae91ef43e44222301d2e6714c380d5ba3c56fd8226802e6d33
+      type: ImageChange
+status:
+  availableReplicas: 1
+  conditions:
+    - lastTransitionTime: '2019-06-20T15:59:10Z'
+      lastUpdateTime: '2019-06-20T15:59:10Z'
+      message: Deployment config has minimum availability.
+      status: 'True'
+      type: Available
+    - lastTransitionTime: '2019-06-20T15:59:08Z'
+      lastUpdateTime: '2019-06-20T15:59:10Z'
+      message: replication controller "liberty-1" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: 'True'
+      type: Progressing
+  details:
+    causes:
+      - type: ConfigChange
+    message: config change
+  latestVersion: 1
+  observedGeneration: 2
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1

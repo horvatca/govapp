@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: '2019-06-20T15:59:04Z'
+  labels:
+    app: liberty
+  name: liberty
+  namespace: websphere-liberty
+  resourceVersion: '281878'
+  selfLink: /api/v1/namespaces/websphere-liberty/services/liberty
+  uid: 53d70377-9374-11e9-bfb6-92111c15adfc
+spec:
+  clusterIP: 172.21.111.35
+  ports:
+    - name: 9080-tcp
+      port: 9080
+      protocol: TCP
+      targetPort: 9080
+    - name: 9443-tcp
+      port: 9443
+      protocol: TCP
+      targetPort: 9443
+  selector:
+    app: liberty
+    deploymentconfig: liberty
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
